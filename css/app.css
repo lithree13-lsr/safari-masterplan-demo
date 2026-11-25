@@ -148,8 +148,37 @@ em { font-style: italic; }
 .zoom { position: absolute; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 6px; transition: right .6s var(--ease); }
 .zoom button { width: 38px; height: 38px; border-radius: 12px; font-size: 18px; }
 .app:has(.card.open) .zoom { right: 408px; }
-.hint { position: absolute; left: 50%; bottom: 18px; translate: -50% 0; margin: 0; padding: 8px 16px; border-radius: 999px; font-size: 12px; color: var(--muted); transition: opacity .6s; pointer-events: none; }
-.hint.gone, .app:has(.card.open) .hint { opacity: 0; }
+.hint { position: absolute; left: 50%; bottom: 72px; translate: -50% 0; margin: 0; padding: 8px 16px; border-radius: 999px; font-size: 12px; color: var(--muted); transition: opacity .6s; pointer-events: none; }
+.hint.gone, .app:has(.card.open) .hint, .view-roads .hint { opacity: 0; }
+
+/* ---------------- 重点景点、道路分析图（2026-11-25） ---------------- */
+.key { translate: -50% -50%; gap: 6px; }
+.key i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #f2c14e; color: var(--ink); box-shadow: 0 0 0 5px rgba(242, 193, 78, .28), 0 4px 14px rgba(0, 0, 0, .45); transition: transform .3s var(--ease); }
+.key span { font-weight: 600; }
+.key:hover i { transform: scale(1.15) rotate(15deg); }
+.list .cube.star { background: #f2c14e; color: var(--ink); }
+
+/* 道路视图：底图压暗，只看道路 */
+.wash { fill: rgba(15, 13, 10, .62); opacity: 0; transition: opacity .5s var(--ease); pointer-events: none; }
+#roads { opacity: 0; transition: opacity .5s var(--ease); }
+.view-roads .wash, .view-roads #roads { opacity: 1; }
+.road, .road-casing { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.road-casing { stroke: rgba(10, 8, 6, .75); }
+.view-roads .route { opacity: 0 !important; }
+.node { translate: -9px -50%; pointer-events: none; }
+.node-ic { display: inline-block; flex: none; width: 18px; height: 18px; border: 3px solid var(--paper); background: var(--ink); }
+.node-ic.gate { border-radius: 4px; transform: rotate(45deg) scale(.85); border-color: var(--accent); }
+.node-ic.stop { border-radius: 50%; }
+
+.views { position: absolute; left: 50%; bottom: 14px; translate: -50% 0; display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.views button { height: 34px; padding: 0 18px; border-radius: 999px; font-size: 13px; color: var(--muted); transition: background .25s, color .25s; }
+.views button.cur { background: var(--paper); color: var(--ink); }
+.legend { position: absolute; left: 14px; bottom: 14px; width: 220px; padding: 6px 8px 12px; border-radius: 16px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .4s, transform .5s var(--ease); }
+.view-roads .legend { opacity: 1; pointer-events: auto; transform: none; }
+.view-roads .layers { max-height: calc(100% - 420px); }
+.lg { display: flex; align-items: center; gap: 10px; padding: 4px 4px; font-size: 12px; }
+.lg svg { flex: none; }
+.lg .node-ic { margin: 0 11px; width: 14px; height: 14px; border-width: 2px; }
 
 /* ---------------- 3D 建筑卡片 ---------------- */
 .bcard { position: fixed; inset: 0; z-index: 40; }
@@ -188,6 +217,10 @@ em { font-style: italic; }
   .card { top: auto; left: 0; right: 0; bottom: 0; width: auto; height: 52vh; border-radius: 22px 22px 0 0; transform: translateY(105%); }
   .app:has(.card.open) .zoom { opacity: 0; pointer-events: none; right: 14px; }
   .hint { bottom: auto; top: 70px; }
+  .views { bottom: auto; top: 64px; }
+  .legend { bottom: 76px; width: 190px; }
+  .view-roads .layers { display: none; }
+  .app:has(.card.open) .legend { display: none; }
   .bc-card { inset: 7vh 10px; }
   .bc-stage model-viewer { left: 0; width: 100%; height: 62%; }
   .bc-shade { background: linear-gradient(0deg, rgba(14, 12, 9, .96) 0%, rgba(14, 12, 9, .7) 40%, transparent 65%); }

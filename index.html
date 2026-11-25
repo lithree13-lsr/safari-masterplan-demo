@@ -41,6 +41,8 @@
       <svg class="overlay" id="overlay" aria-hidden="true">
         <g id="cam">
           <path class="dim" id="dim"></path>
+          <rect class="wash" id="wash" x="-20000" y="-20000" width="45100" height="43450"></rect>
+          <g id="roads"></g>
           <g id="routes"></g>
           <g id="zones"></g>
         </g>
@@ -62,6 +64,13 @@
     </aside>
 
     <aside class="card ui" id="card" aria-live="polite"></aside>
+
+    <!-- 视图切换：同一张底图上换不同的分析图 -->
+    <nav class="views ui" aria-label="视图">
+      <button data-view-mode="plan">总图</button>
+      <button data-view-mode="roads">道路</button>
+    </nav>
+    <aside class="legend ui" id="legend" aria-label="图例"></aside>
 
     <div class="zoom ui">
       <button data-action="zoom-in" aria-label="放大">+</button>

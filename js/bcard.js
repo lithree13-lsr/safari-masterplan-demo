@@ -15,6 +15,8 @@ window.BCard = (() => {
     front: '0deg 84deg auto',
   };
   let viewerReady = null, current = null;
+  // 建筑和重点景点共用这张卡片（2026-11-25）：景点自带 facts，建筑没有时用面积和层数
+  const facts = b => b.facts || [['建筑面积', `${b.area.toLocaleString()} ㎡`], ['层数', b.floors]];
 
   function loadViewer() {
     if (!viewerReady) viewerReady = new Promise((res, rej) => {
@@ -48,7 +50,7 @@ window.BCard = (() => {
         <div class="bc-info">
           <p class="eyebrow">${esc(b.en)}</p>
           <h2>${esc(b.name)}</h2>
-          <dl><div><dt>建筑面积</dt><dd>${b.area.toLocaleString()} ㎡</dd></div><div><dt>层数</dt><dd>${b.floors}</dd></div></dl>
+          <dl>${facts(b).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
           <p class="bc-desc">${esc(b.desc)}</p>
           <button class="btn primary" data-bc="inside">进入 3D <span aria-hidden="true">→</span></button>
         </div>

@@ -182,6 +182,7 @@ window.Camera = (() => {
     onChange: f => listeners.push(f),
     onTap: f => onTap.push(f),
     toScreen: (px, py) => [px * k + x, py * k + y],
+    toWorld: (sx, sy) => [Math.round((sx - x) / k), Math.round((sy - y) / k)],   // 取坐标用：屏幕点 → 底图像素
     get k() { return k; },
     flyTo, fit, jump,
     zoomBy: f => { const [vw, vh] = size(); zoomAnimated(vw / 2, vh / 2, f); },

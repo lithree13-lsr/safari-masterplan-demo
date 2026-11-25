@@ -55,6 +55,24 @@ pip install pillow numpy trimesh
 
 之后每次 `git push`，网站会自动更新。
 
+## 怎么加内容
+
+**加一个重点景点（带自己的 3D 模型）**
+1. 把模型导出成 `.glb`（SketchUp / Rhino / Revit / Blender 都可以），压缩到 2 MB 以内，放进 `assets/models/`。
+2. 在 `tools/park_source.json` 的 `attractions` 里加一项：`id`、所属分区 `zone`、名字、位置 `at`（底图像素）、`model`（文件名，不带 .glb）、`facts`、`desc`。
+3. 运行 `python3 tools/build_data.py`，刷新页面。
+
+**加一条道路 / 改道路分析图**
+1. 在 `park_source.json` 的 `roads` 里加一项：`class`（道路等级）和 `pts`（折线点，底图像素）。
+2. 想加新的道路等级，就在 `road_classes` 里加颜色、线宽、虚线。图例会自动更新。
+3. 运行 `python3 tools/build_data.py`。
+
+坐标怎么取：在页面上按 F12 打开控制台，输入下面这行，然后在图上点一下，控制台就会打印出该点的底图坐标：
+
+```js
+document.getElementById('stage').addEventListener('click', e => console.log(Camera.toWorld(e.clientX, e.clientY)))
+```
+
 ## 缩放不闪烁的关键
 
 - 只有底图在缩放层里（CSS `transform`）。

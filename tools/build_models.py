@@ -88,3 +88,26 @@ oa += [part(dome, "roof", y=7.1)]
 oa += [box(3, 0.4, 16, "wood", x=0, y=0.3, z=22)]
 oa += [ball(2.4, "leaf", x=27 * np.cos(a), y=4, z=27 * np.sin(a)) for a in np.radians(np.arange(10, 360, 30))]
 save("oasis-pavilion", oa)
+
+# 狮子岩观景台（重点景点）：几块不规则的岩石，上面悬挑出一个木平台
+MAT["rock"] = PBRMaterial(baseColorFactor=[176, 140, 104, 255], roughnessFactor=1.0, metallicFactor=0)
+MAT["grass"] = PBRMaterial(baseColorFactor=[196, 190, 128, 255], roughnessFactor=1.0, metallicFactor=0)
+rng = np.random.default_rng(11)
+
+
+def rock(r, sx, sy, sz, x, y, z):
+    m = trimesh.creation.icosphere(subdivisions=2, radius=r)
+    m.vertices *= 1 + rng.normal(0, 0.09, (len(m.vertices), 1))     # 每个顶点随机推拉，球就变成了石头
+    m.apply_scale([sx, sy, sz])
+    return part(m, "rock", x, y, z)
+
+
+lr = [cyl(28, 0.4, "grass", sections=48)]
+lr += [rock(10, 1.4, 1.0, 1.0, -5, 5, 0), rock(8, 1.0, 1.35, 0.9, 4, 7, -3), rock(5, 1.2, 0.8, 1.1, -14, 2, 9), rock(4, 1.0, 0.7, 1.0, 13, 1.5, 10)]
+deck_y = 13
+lr += [box(14, 0.6, 9, "wood", x=15, y=deck_y, z=-3)]                                  # 悬挑平台
+lr += [box(14, 1.1, 0.15, "wood", x=15, y=deck_y + 0.6, z=z) for z in (-7.4, 1.4)]         # 栏杆
+lr += [box(0.15, 1.1, 9, "wood", x=22, y=deck_y + 0.6, z=-3)]
+lr += [cyl(0.3, deck_y, "wood", x=x, y=0.4, z=z, sections=8) for x in (16, 21.5) for z in (-7, 1)]   # 斜下方的支撑柱
+lr += [ball(2.6, "leaf", x=x, y=3, z=z) for x, z in ((-20, -12), (-23, 6), (16, 17), (-6, 19), (22, -16))]
+save("lion-rock", lr)

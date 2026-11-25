@@ -29,6 +29,11 @@ park = {
     "experiences": src["experiences"],
     "routes": routes,
     "buildings": [b for b in src["buildings"] if b.get("model")],
+    "attractions": src.get("attractions", []),
+    # 道路分析图：每条路按等级给样式，折线平滑成曲线（两点的直路保持直线）
+    "road_classes": src.get("road_classes", {}),
+    "roads": [{"id": r["id"], "class": r["class"], "path": catmull(r["pts"], 8) if len(r["pts"]) > 2 else r["pts"]} for r in src.get("roads", [])],
+    "nodes": src.get("nodes", []),
 }
 
 out = ROOT / "data" / "park.js"
