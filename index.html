@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f0d0a">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Safari Park 总规划 · 学习版</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23d9774a'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="preload" as="image" href="assets/plan/base-lqip.webp">
+</head>
+<body>
+
+  <!-- 首页：全屏标题 + 两个入口 -->
+  <section class="intro" id="intro">
+    <div class="intro-bg" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="brand"><em>Safari Park</em><span>学习版 · DEMO</span></header>
+    <div class="intro-copy">
+      <p class="eyebrow">二期总体规划 · Stage 2 Masterplan</p>
+      <h1>一层一层，<br><em>走进园区。</em></h1>
+      <p class="lede">一张总图、七个分区、三条游线。打开图层，点开分区，再点一栋建筑看它的 3D 模型。</p>
+      <div class="intro-actions">
+        <button class="btn primary" data-action="enter">进入总规划 <span aria-hidden="true">→</span></button>
+        <button class="btn ghost" data-action="enter-zones">查看分区</button>
+      </div>
+    </div>
+    <p class="intro-foot">虚构园区，仅用于学习「交互式总规划网站」的做法</p>
+  </section>
+
+  <!-- 总图 -->
+  <main class="app" id="app" hidden>
+    <div class="stage" id="stage">
+      <div class="world" id="world">
+        <img class="base" id="base" alt="" draggable="false" src="assets/plan/base-lqip.webp">
+      </div>
+      <svg class="overlay" id="overlay" aria-hidden="true">
+        <g id="cam">
+          <path class="dim" id="dim"></path>
+          <g id="routes"></g>
+          <g id="zones"></g>
+        </g>
+      </svg>
+      <div class="pins" id="pins"></div>
+    </div>
+
+    <header class="topbar ui">
+      <button class="home" data-action="home" aria-label="回到首页"><em>Safari Park</em><span>STAGE 2</span></button>
+      <nav class="crumbs" id="crumbs"></nav>
+      <div class="top-right">
+        <button class="chip" id="zonesBtn" data-action="toggle-zones">分区</button>
+      </div>
+    </header>
+
+    <aside class="layers ui" id="layers">
+      <button class="layers-head" data-action="toggle-layers"><span>图层</span><b id="layerCount"></b><i aria-hidden="true">⌄</i></button>
+      <div class="layers-body" id="layersBody"></div>
+    </aside>
+
+    <aside class="card ui" id="card" aria-live="polite"></aside>
+
+    <div class="zoom ui">
+      <button data-action="zoom-in" aria-label="放大">+</button>
+      <button data-action="zoom-out" aria-label="缩小">−</button>
+      <button data-action="fit" aria-label="全图">⤢</button>
+    </div>
+    <p class="hint ui" id="hint">拖动平移 · 滚轮或双指缩放 · 双击放大</p>
+  </main>
+
+  <!-- 3D 建筑卡片 -->
+  <div class="bcard" id="bcard" hidden></div>
+
+  <script src="data/park.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/bcard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
